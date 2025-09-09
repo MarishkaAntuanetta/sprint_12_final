@@ -1,9 +1,5 @@
 .git
 .github
-**/*.md
-**/*.log
-**/*.sqlite
-**/*.db
-bin/
-build/
-dist/
+*.md
+*.log
+*.db
