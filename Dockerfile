@@ -1,22 +1,22 @@
-# самый простой Dockerfile, дружелюбный к modernc.org/sqlite
+# дружелюбный к modernc.org/sqlite базовый образ
 FROM golang:1.24-bookworm
 
 WORKDIR /app
 
-# 1) инструменты для сборки (gcc и т.п. — modernc это любит)
+# 1) инструменты сборки (modernc их любит)
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential ca-certificates && \
     rm -rf /var/lib/apt/lists/*
 
-# 2) сначала модули (лучше кешируется)
+# 2) сначала модули — лучше кэшируются
 COPY go.mod go.sum ./
 RUN go mod download
 
-# 3) затем исходники
+# 3) потом исходники
 COPY . .
 
-# 4) сборка (CGO включен по умолчанию в golang:bookworm)
+# 4) сборка (CGO включён по умолчанию в bookworm)
 RUN go build -o parcel-tracker ./main.go
 
-# 5) запуск
+# 5) запуск бинарника
 CMD ["./parcel-tracker"]
