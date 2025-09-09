@@ -16,7 +16,7 @@ RUN go mod download
 COPY . .
 
 # 4) сборка (CGO включён по умолчанию в bookworm)
-RUN go build -o parcel-tracker ./main.go
+RUN go build -o parcel-tracker .
 
 # 5) запуск бинарника
 CMD ["./parcel-tracker"]
